@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Samadi Creative | پورتفولیو</title>
     <style>
+        /* 1. تنظیمات پایه و سیستم رنگی */
         :root {
             --bg-color: #0f0f0f;
             --surface-color: #1a1a1a;
@@ -13,10 +14,7 @@
             --text-secondary: #a0a0a0;
         }
 
-        /* اسکرول نرم برای وقتی روی دکمه کلیک می‌شود */
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -25,9 +23,24 @@
             color: var(--text-main);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* بخش Hero */
+        /* 2. افکت درخشش پس‌زمینه */
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: var(--accent-color);
+            filter: blur(150px);
+            opacity: 0.05;
+            z-index: -1;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 3. بخش Hero (با لوگوی جدید شما) */
         .hero {
             height: 100vh;
             display: flex;
@@ -36,11 +49,19 @@
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            position: relative;
+        }
+
+        /* استایل لوگو */
+        .main-logo {
+            width: 180px; /* اندازه لوگو - می‌توانید تغییر دهید */
+            height: auto;
+            margin-bottom: 30px;
+            border-radius: 20px; /* اگر می‌خواهید گوشه‌های لوگو گرد باشد */
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2); /* سایه ملایم دور لوگو */
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: clamp(2rem, 6vw, 3.5rem);
             margin-bottom: 10px;
             background: linear-gradient(to right, #fff, var(--accent-color));
             -webkit-background-clip: text;
@@ -48,14 +69,14 @@
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 4vw, 1.4rem);
             color: var(--text-secondary);
             max-width: 600px;
         }
 
         .cta-button {
-            margin-top: 30px;
-            padding: 12px 30px;
+            margin-top: 40px;
+            padding: 14px 40px;
             border: 2px solid var(--accent-color);
             color: var(--accent-color);
             text-decoration: none;
@@ -67,82 +88,10 @@
         .cta-button:hover {
             background-color: var(--accent-color);
             color: var(--bg-color);
-            box-shadow: 0 0 20px var(--accent-color);
+            box-shadow: 0 0 30px var(--accent-color);
         }
 
-        /<!-- بخش دوم: نمایش آثار (پورتفولیو) -->
-<section class="portfolio" id="portfolio">
-    <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;">آثار من</h2>
-    
-    <div class="portfolio-grid">
-        
-        <!-- پروژه ۱ -->
-        <div class="project-card">
-            <!-- اینجا نام فایل تصویر خودتان را در src بنویسید -->
-            <img src="https://uploadkon.ir/uploads/4bd630_26551d9ac4-7299-4f25-9c05-058a7bbf1f40[1].png" class="" alt="طراحی لوگو">
-            <div class="project-info">
-                <h3>طراحی لوگو</h3>
-                <p>طراحی هویت بصری برای یک برند مدرن</p>
-            </div>
-        </div>
-
-        <<!-- بخش دوم: نمایش آثار (پورتفولیو) -->
-<section class="portfolio" id="portfolio">
-    <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;">آثار من</h2>
-    
-    <div class="portfolio-grid">
-        
-        <!-- پروژه ۱ -->
-        <div class="project-card">
-            <!-- اینجا نام فایل تصویر خودتان را در src بنویسید -->
-            <img src="project1.png" class="project-img" alt="طراحی لوگو">
-            <div class="project-info">
-                <h3>طراحی لوگو</h3>
-                <p>طراحی هویت بصری برای یک برند مدرن</p>
-            </div>
-        </div>
-
-        <https://uploadkon.ir/uploads/4bd630_26551d9ac4-7299-4f25-9c05-058a7bbf1f40[1].png>
-        <div class="project-card">
-            <img src="project2.jpg" class="project-img" alt="طراحی سایت">
-            <div class="project-info">
-                <h3>طراحی وب‌سایت</h3>
-                <p>طراحی رابط کاربری (UI) برای اپلیکیشن موبایل</p>
-            </div>
-        </div>
-
-        <!-- پروژه ۳ -->
-        <div class="project-card">
-            <img src="project3.png" class="project-img" alt="برندینگ">
-            <div class="project-info">
-                <h3>برندینگ</h3>
-                <p>خلق استراتژی بصری برای کسب‌وکارهای نوپا</p>
-            </div>
-        </div>
-
-    </div>
-</section>
->
-        <div class="project-card">
-            <img src="project2.jpg" class="project-img" alt="طراحی سایت">
-            <div class="project-info">
-                <h3>طراحی وب‌سایت</h3>
-                <p>طراحی رابط کاربری (UI) برای اپلیکیشن موبایل</p>
-            </div>
-        </div>
-
-        <!-- پروژه ۳ -->
-        <div class="project-card">
-            <img src="project3.png" class="project-img" alt="برندینگ">
-            <div class="project-info">
-                <h3>برندینگ</h3>
-                <p>خلق استراتژی بصری برای کسب‌وکارهای نوپا</p>
-            </div>
-        </div>
-
-    </div>
-</section>
-/
+        /* 4. بخش پورتفولیو */
         .portfolio {
             padding: 100px 20px;
             max-width: 1200px;
@@ -155,20 +104,27 @@
             margin-bottom: 50px;
         }
 
-        /* گرید کارهای گرافیکی */
+        .portfolio h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 10px auto;
+        }
+
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
-        /* کارت پروژه‌ها */
         .project-card {
             background-color: var(--surface-color);
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease;
-            border: 1px solid #333;
+            transition: all 0.4s ease;
+            border: 1px solid #222;
         }
 
         .project-card:hover {
@@ -178,40 +134,25 @@
 
         .project-img {
             width: 100%;
-            height: 200px;
-            background-color: #333; /* جایگزین تصویر تا وقتی عکسی ندارید */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #555;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            background-color: #333;
         }
 
         .project-info {
             padding: 20px;
         }
 
-        .project-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.2rem;
-        }
+        .project-info h3 { margin: 0 0 10px 0; }
+        .project-info p { color: var(--text-secondary); margin: 0; font-size: 0.9rem; }
 
-        .project-info p {
+        /* 5. فوتر */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-        .glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: var(--accent-color);
-            filter: blur(150px);
-            opacity: 0.1;
-            z-index: -1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            border-top: 1px solid #222;
         }
     </style>
 </head>
@@ -219,47 +160,38 @@
 
     <div class="glow"></div>
 
-    <!-- بخش اول: خوش‌آمدگویی -->
+    <!-- بخش Hero با لوگوی شما -->
     <section class="hero">
+        <!-- لینک مستقیم لوگوی شما در اینجا قرار گرفت -->
+        <img src="https://uploadkon.ir/uploads/4bd630_26551d9ac4-7299-4f25-9c05-058a7bbf1f40[1].png" alt="Samadi Creative Logo" class="main-logo">
+        
         <h1>Samadi Creative</h1>
         <p>طراحی هوشمندانه، گرافیک خیره‌کننده و تجربه‌ی کاربری بی‌نقص</p>
         <a href="#portfolio" class="cta-button">مشاهده پروژه‌ها</a>
     </section>
 
-    <!-- بخش دوم: نمایش آثار (پورتفولیو) -->
+    <!-- بخش پورتفولیو -->
     <section class="portfolio" id="portfolio">
         <h2>آثار من</h2>
-        
         <div class="portfolio-grid">
+            
             <!-- پروژه ۱ -->
             <div class="project-card">
-               <img src="<img src="project1.png" class="project-img" alt="توضیح کوتاه پروژه">" class="project-img" alt="توضیح کوتاه پروژه">
+                <img src="project1.png" class="project-img" alt="پروژه ۱">
                 <div class="project-info">
                     <h3>طراحی لوگو</h3>
-                    <p>طراحی هویت بصری برای یک برند مدرن</p>
+                    <p>توضیحات کوتاه درباره این پروژه...</p>
                 </div>
             </div>
 
             <!-- پروژه ۲ -->
             <div class="project-card">
-                <div class="project-img">تصویر پروژه ۲</div>
+                <img src="project2.png" class="project-img" alt="پروژه ۲">
                 <div class="project-info">
-                    <h3>طراحی وب‌سایت</h3>
-                    <p>طراحی رابط کاربری (UI) برای اپلیکیشن موبایل</p>
+                    <h3>طراحی سایت</h3>
+                    <p>توضیحات کوتاه درباره این پروژه...</p>
                 </div>
             </div>
 
             <!-- پروژه ۳ -->
-            <div class="project-card">
-                <div class="project-img">تصویر پروژه ۳</div>
-                <div class="project-info">
-                    <h3>برندینگ</h3>
-                    <p>خلق استراتژی بصری برای کسب‌وکارهای نوپا</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</body>
-</html>
 
