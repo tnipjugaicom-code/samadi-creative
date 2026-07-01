@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samadi Creative | طراحی و خلاقیت</title>
+    <title>Samadi Creative | Digital Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --surface-color: #161616;
+            --bg-color: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
             --accent-color: #00ffcc;
+            --accent-glow: rgba(0, 255, 204, 0.4);
             --text-main: #ffffff;
-            --text-secondary: #a0a0a0;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --text-dim: #a0a0a0;
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,103 +22,174 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Inter', 'Tahoma', sans-serif;
-            line-height: 1.7;
+            line-height: 1.8;
             overflow-x: hidden;
         }
 
-        .glow-effect {
-            position: fixed; width: 60vw; height: 60vw; background: var(--accent-color);
-            filter: blur(180px); opacity: 0.03; z-index: -1; top: -10%; left: -10%;
+        /* --- Animated Background --- */
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+        }
+        .blob {
+            position: absolute; width: 500px; height: 500px;
+            background: var(--accent-color);
+            filter: blur(150px); opacity: 0.1; border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(20%, 20%); }
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section-padding { padding: 100px 0; }
-        .section-title { text-align: center; margin-bottom: 60px; }
-        .section-title h2 { font-size: 2.5rem; position: relative; display: inline-block; }
-        .section-title h2::after {
-            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            width: 50px; height: 3px; background: var(--accent-color);
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+        .section-padding { padding: 120px 0; }
+        
+        .section-title { text-align: center; margin-bottom: 80px; }
+        .section-title h2 { 
+            font-size: 3rem; font-weight: 700; letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--accent-color));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         /* --- Hero Section --- */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .main-logo { width: 120px; margin-bottom: 20px; filter: drop-shadow(0 0 15px var(--accent-color)); }
-        .hero h1 { font-size: clamp(2.5rem, 7vw, 4rem); margin-bottom: 15px; background: linear-gradient(to bottom, #fff, var(--accent-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; }
-        .btn { padding: 14px 35px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: var(--transition); display: inline-block; }
-        .btn-primary { background: var(--accent-color); color: var(--bg-color); margin-top: 30px; }
-        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 255, 204, 0.3); }
-
-        /* --- Video Showcase Section --- */
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; }
-        .video-card { background: var(--surface-color); border-radius: 20px; overflow: hidden; border: 1px solid #222; }
-        video { width: 100%; display: block; }
-        .video-info { padding: 20px; }
-        .video-info h3 { color: var(--accent-color); margin-bottom: 5px; }
-
-        /* --- Portfolio Grid --- */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .project-card { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 1/1; background: var(--surface-color); }
-        .project-card img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); opacity: 0.6; }
-        .project-card:hover img { transform: scale(1.1); opacity: 0.3; }
-        .project-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: var(--transition); }
-        .project-card:hover .project-overlay { opacity: 1; }
-
-        /* --- Pricing / Sales Section --- */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .price-card {
-            background: var(--surface-color); padding: 40px; border-radius: 30px; text-align: center;
-            border: 1px solid #222; transition: var(--transition); position: relative;
+        .hero {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
         }
-        .price-card.popular { border: 2px solid var(--accent-color); transform: scale(1.05); }
-        .popular-tag { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--accent-color); color: var(--bg-color); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
-        .price-card h3 { font-size: 1.8rem; margin-bottom: 10px; }
-        .price-card .amount { font-size: 2.5rem; font-weight: 700; margin: 20px 0; color: var(--accent-color); }
-        .price-card ul { list-style: none; margin-bottom: 30px; color: var(--text-secondary); }
-        .price-card ul li { margin-bottom: 10px; }
+        .main-logo { 
+            width: 160px; height: 160px; border-radius: 30px;
+            object-fit: cover; margin-bottom: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+            border: 2px solid var(--glass-border);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
 
-        /* --- Contact & Footer --- */
-        .contact-section { text-align: center; background: var(--surface-color); border-radius: 40px; padding: 80px 20px; margin-bottom: 50px; }
-        .contact-link { font-size: clamp(1.5rem, 5vw, 2.5rem); color: var(--accent-color); text-decoration: none; font-weight: 700; display: block; margin-top: 20px; }
-        footer { text-align: center; padding: 40px; color: var(--text-secondary); font-size: 0.9rem; }
+        .hero h1 { font-size: clamp(3rem, 8vw, 5rem); line-height: 1.1; margin-bottom: 20px; }
+        .hero p { font-size: 1.4rem; color: var(--text-dim); max-width: 700px; margin-bottom: 40px; }
+
+        .btn {
+            padding: 18px 45px; border-radius: 100px; text-decoration: none;
+            font-weight: 700; font-size: 1.1rem; transition: all 0.4s ease;
+            display: inline-block; cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--accent-color); color: #000;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--accent-color); }
+
+        /* --- Glass Cards Styling --- */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            transition: all 0.4s ease;
+        }
+
+        /* --- Video Section --- */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
+        .video-card { overflow: hidden; position: relative; }
+        .video-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+        video { width: 100%; display: block; }
+        .video-info { padding: 30px; }
+        .video-info h3 { color: var(--accent-color); font-size: 1.5rem; margin-bottom: 10px; }
+        .video-info p { color: var(--text-dim); }
+
+        /* --- Portfolio Section --- */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .project-card { position: relative; aspect-ratio: 16/10; overflow: hidden; border-radius: 25px; }
+        .project-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .project-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.7);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; transition: 0.4s; backdrop-filter: blur(5px);
+        }
+        .project-card:hover .project-overlay { opacity: 1; }
+        .project-card:hover img { transform: scale(1.1); }
+
+        /* --- Pricing Section --- */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .price-card { padding: 50px 40px; text-align: center; position: relative; }
+        .price-card.popular { 
+            border: 2px solid var(--accent-color); 
+            transform: scale(1.05); 
+            background: rgba(0, 255, 204, 0.02);
+        }
+        .popular-tag {
+            position: absolute; top: 20px; right: 20px;
+            background: var(--accent-color); color: #000;
+            padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; font-weight: 800;
+        }
+        .price-card h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .price-card .amount { font-size: 3rem; font-weight: 800; margin-bottom: 30px; color: var(--accent-color); }
+        .price-card ul { list-style: none; text-align: right; margin-bottom: 40px; color: var(--text-dim); }
+        .price-card ul li { margin-bottom: 15px; display: flex; align-items: center; }
+        .price-card ul li::before { content: '✓'; color: var(--accent-color); margin-left: 10px; font-weight: bold; }
+
+        /* --- Contact Section --- */
+        .contact-container {
+            background: var(--card-bg);
+            border-radius: 50px; padding: 80px 40px;
+            text-align: center; border: 1px solid var(--glass-border);
+        }
+        .contact-link {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            color: var(--accent-color); text-decoration: none;
+            font-weight: 800; display: block; margin: 30px 0;
+            transition: 0.3s;
+        }
+        .contact-link:hover { text-shadow: 0 0 30px var(--accent-glow); }
+
+        footer { padding: 50px; text-align: center; color: var(--text-dim); font-size: 0.9rem; }
 
         @media (max-width: 768px) {
-            .video-grid { grid-template-columns: 1fr; }
+            .section-padding { padding: 70px 0; }
             .price-card.popular { transform: scale(1); }
+            .video-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glow-effect"></div>
+    <div class="bg-animation">
+        <div class="blob"></div>
+    </div>
 
     <!-- 1. HERO -->
     <section class="hero container">
-        <img src="logo.png" alt="Logo" class="main-logo">
-        <h1>Samadi Creative</h1>
-        <p>تبدیل ایده‌ها به واقعیت‌های بصری خیره‌کننده</p>
-        <a href="#portfolio" class="btn btn-primary">مشاهده آثار</a>
+        <img src="https://uploadkon.ir/uploads/b5be01_26photo26892923900.jpg" alt="Samadi Creative Logo" class="main-logo">
+        <h1>Samadi <span style="color: var(--accent-color);">Creative</span></h1>
+        <p>خلق دنیایی از زیبایی، حرکت و هویت بصری برای برندهای پیشرو</p>
+        <div class="hero-btns">
+            <a href="#portfolio" class="btn btn-primary">شروع همکاری</a>
+        </div>
     </section>
 
-    <!-- 2. VIDEO SHOWCASE (بخش ویدیو) -->
+    <!-- 2. VIDEO SHOWCASE -->
     <section class="section-padding container" id="videos">
         <div class="section-title">
-            <h2>نمایش موشن و ویدیو</h2>
+            <h2>Motion & Video</h2>
         </div>
         <div class="video-grid">
-            <div class="video-card">
-                <!-- جایگزین کردن mp4 خودتان -->
+            <div class="video-card glass-card">
                 <video src="motion1.mp4" autoplay loop muted playsinline></video>
                 <div class="video-info">
-                    <h3>موشن‌گرافیک برندینگ</h3>
-                    <p>انیمیشن لوگو و معرفی هویت بصری</p>
+                    <h3>Brand Motion</h3>
+                    <p>انیمیشن لوگو و هویت متحرک</p>
                 </div>
             </div>
-            <div class="video-card">
+            <div class="video-card glass-card">
                 <video src="motion2.mp4" autoplay loop muted playsinline></video>
                 <div class="video-info">
-                    <h3>ویدیو تبلیغاتی</h3>
-                    <p>تدوین و جلوه‌های بصری مدرن</p>
+                    <h3>Visual FX</h3>
+                    <p>جلوه‌های ویژه و تدوین تبلیغاتی</p>
                 </div>
             </div>
         </div>
@@ -126,79 +198,79 @@
     <!-- 3. PORTFOLIO -->
     <section class="section-padding container" id="portfolio">
         <div class="section-title">
-            <h2>پورتفولیو گرافیک</h2>
+            <h2>Graphic Portfolio</h2>
         </div>
         <div class="portfolio-grid">
-            <div class="project-card"><img src="p1.jpg" alt=""><div class="project-overlay"><h3>طراحی لوگو</h3></div></div>
-            <div class="project-card"><img src="p2.jpg" alt=""><div class="project-overlay"><h3>پوستر تبلیغاتی</h3></div></div>
-            <div class="project-card"><img src="p3.jpg" alt=""><div class="project-overlay"><h3>هویت بصری</h3></div></div>
+            <div class="project-card glass-card"><img src="p1.jpg" alt=""><div class="project-overlay"><h3>Logo Design</h3></div></div>
+            <div class="project-card glass-card"><img src="p2.jpg" alt=""><div class="project-overlay"><h3>Brand Identity</h3></div></div>
+            <div class="project-card glass-card"><img src="p3.jpg" alt=""><div class="project-overlay"><h3>Web Interface</h3></div></div>
         </div>
     </section>
 
-    <!-- 4. PRICING / SALES (بخش فروش) -->
+    <!-- 4. PRICING -->
     <section class="section-padding container" id="pricing">
         <div class="section-title">
-            <h2>خدمات و بسته‌ها</h2>
-            <p style="color: var(--text-secondary);">انتخاب هوشمندانه برای رشد کسب‌وکار شما</p>
+            <h2>Services & Plans</h2>
         </div>
         <div class="pricing-grid">
-            <!-- بسته پایه -->
-            <div class="price-card">
-                <h3>بسته شروع</h3>
+            <div class="price-card glass-card">
+                <h3>Essential</h3>
                 <div class="amount">توافقی</div>
                 <ul>
-                    <li>طراحی لوگو حرفه‌ای</li>
-                    <li>پالت رنگی برند</li>
-                    <li>۲ فایل با کیفیت بالا</li>
+                    <li>طراحی لوگو و تایپوگرافی</li>
+                    <li>پالت رنگی اختصاصی</li>
+                    <li>فایل‌های آماده چاپ</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary" style="background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">مشاوره رایگان</a>
+                <a href="#contact" class="btn" style="border: 1px solid var(--accent-color); color: var(--accent-color);">درخواست مشاوره</a>
             </div>
 
-            <!-- بسته ویژه -->
-            <div class="price-card popular">
-                <div class="popular-tag">پیشنهادی</div>
-                <h3>بسته کامل برند</h3>
+            <div class="price-card glass-card popular">
+                <div class="popular-tag">BEST VALUE</div>
+                <h3>Premium Brand</h3>
                 <div class="amount">توافقی</div>
                 <ul>
-                    <li>طراحی هویت بصری کامل</li>
-                    <li>طراحی کارت ویزیت و سربرگ</li>
-                    <li>۱ عدد موشن‌گرافیک لوگو</li>
-                    <li>پشتیبانی پس از طراحی</li>
+                    <li>هویت بصری کامل برند</li>
+                    <li>طراحی موشن لوگو (2D)</li>
+                    <li>طراحی کارت ویزیت و استیشنری</li>
+                    <li>پشتیبانی ویژه ۶ ماهه</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary">ثبت سفارش</a>
+                <a href="#contact" class="btn btn-primary">ثبت پروژه</a>
             </div>
 
-            <!-- بسته وب -->
-            <div class="price-card">
-                <h3>طراحی وب</h3>
+            <div class="price-card glass-card">
+                <h3>Digital Web</h3>
                 <div class="amount">توافقی</div>
                 <ul>
-                    <li>طراحی سایت تک صفحه‌ای</li>
-                    <li>طراحی گرافیکی المان‌ها</li>
-                    <li>بهینه‌سازی سرعت</li>
+                    <li>طراحی UI/UX مدرن</li>
+                    <li>سایت تک صفحه‌ای واکنش‌گرا</li>
+                    <li>بهینه‌سازی سرعت و SEO</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary" style="background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">مشاوره رایگان</a>
+                <a href="#contact" class="btn" style="border: 1px solid var(--accent-color); color: var(--accent-color);">درخواست مشاوره</a>
             </div>
         </div>
     </section>
 
     <!-- 5. CONTACT -->
-    <section class="container" id="contact">
-        <div class="contact-section">
-            <h2>آماده شروع پروژه هستید؟</h2>
-            <p>همین حالا با من در ارتباط باشید تا ایده‌تان را اجرا کنیم.</p>
-            <a href="mailto:yourmail@example.com" class="contact-link">ارسال ایمیل مستقیم</a>
-            <p style="margin-top: 20px; color: var(--text-secondary);">یا در تلگرام/واتس‌اپ پیام دهید</p>
-            <a href="#" class="contact-link" style="font-size: 1.5rem;">@SamadiCreative</a>
+    <section class="section-padding container" id="contact">
+        <div class="contact-container">
+            <h2>آماده‌ای که بدرخشی؟</h2>
+            <p>همین حالا برای شروع پروژه رویایی خود با من تماس بگیرید.</p>
+            <a href="mailto:yourmail@example.com" class="contact-link">Email Me Direct</a>
+            <div style="margin-top: 20px;">
+                <a href="#" style="color: var(--text-dim); margin: 0 15px; text-decoration: none;">Instagram</a>
+                <a href="#" style="color: var(--text-dim); margin: 0 15px; text-decoration: none;">Telegram</a>
+                <a href="#" style="color: var(--text-dim); margin: 0 15px; text-decoration: none;">WhatsApp</a>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Samadi Creative. طراحی شده با دقت و خلاقیت.</p>
+        <p>&copy; 2026 Samadi Creative. All Rights Reserved.</p>
     </footer>
 
 </body>
 </html>
+
 
 
 
