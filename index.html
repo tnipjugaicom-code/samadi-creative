@@ -3,270 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samadi Creative | Digital Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Samadi Creative | طراحی خلاقانه</title>
     <style>
+        /* تعریف متغیرهای رنگی جدید - تم سرمه‌ای لوکس */
         :root {
-            --bg-color: #050505;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --accent-color: #00ffcc;
-            --accent-glow: rgba(0, 255, 204, 0.4);
+            --bg-color: #0a1128; /* سرمه‌ای عمیق */
+            --secondary-bg: #121d3d; 
+            --accent-color: #00ffcc; /* سبز فسفری برای تاکید */
+            --accent-glow: rgba(0, 255, 204, 0.3);
             --text-main: #ffffff;
-            --text-dim: #a0a0a0;
+            --text-dim: #b0b8c4;
+            --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tahoma', 'Segoe UI', sans-serif; }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Inter', 'Tahoma', sans-serif;
-            line-height: 1.8;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* --- Animated Background --- */
-        .bg-animation {
+        /* پس‌زمینه متحرک ملایم */
+        .bg-effect {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden;
-        }
-        .blob {
-            position: absolute; width: 500px; height: 500px;
-            background: var(--accent-color);
-            filter: blur(150px); opacity: 0.1; border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(20%, 20%); }
+            background: radial-gradient(circle at 20% 30%, #162447 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, #1c2d55 0%, transparent 40%);
+            z-index: -1;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
-        .section-padding { padding: 120px 0; }
-        
-        .section-title { text-align: center; margin-bottom: 80px; }
-        .section-title h2 { 
-            font-size: 3rem; font-weight: 700; letter-spacing: -1px;
-            background: linear-gradient(to right, #fff, var(--accent-color));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        /* --- Navigation --- */
+        nav {
+            display: flex; justify-content: center; gap: 25px; padding: 20px;
+            background: rgba(10, 17, 40, 0.8); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--glass-border);
         }
+        nav a {
+            color: var(--text-dim); text-decoration: none; font-size: 0.95rem;
+            cursor: pointer; transition: 0.3s;
+        }
+        nav a:hover { color: var(--accent-color); }
 
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-        }
-        .main-logo { 
-            width: 160px; height: 160px; border-radius: 30px;
-            object-fit: cover; margin-bottom: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
-            border: 2px solid var(--glass-border);
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+        /* --- Containers --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        .page { display: none; animation: fadeIn 0.5s ease-out; }
+        .page.active { display: block; }
 
-        .hero h1 { font-size: clamp(3rem, 8vw, 5rem); line-height: 1.1; margin-bottom: 20px; }
-        .hero p { font-size: 1.4rem; color: var(--text-dim); max-width: 700px; margin-bottom: 40px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .btn {
-            padding: 18px 45px; border-radius: 100px; text-decoration: none;
-            font-weight: 700; font-size: 1.1rem; transition: all 0.4s ease;
-            display: inline-block; cursor: pointer;
-        }
-        .btn-primary {
-            background: var(--accent-color); color: #000;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--accent-color); }
-
-        /* --- Glass Cards Styling --- */
+        /* --- Components --- */
         .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            transition: all 0.4s ease;
-        }
-
-        /* --- Video Section --- */
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
-        .video-card { overflow: hidden; position: relative; }
-        .video-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
-        video { width: 100%; display: block; }
-        .video-info { padding: 30px; }
-        .video-info h3 { color: var(--accent-color); font-size: 1.5rem; margin-bottom: 10px; }
-        .video-info p { color: var(--text-dim); }
-
-        /* --- Portfolio Section --- */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
-        .project-card { position: relative; aspect-ratio: 16/10; overflow: hidden; border-radius: 25px; }
-        .project-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
-        .project-overlay {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.7);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; transition: 0.4s; backdrop-filter: blur(5px);
-        }
-        .project-card:hover .project-overlay { opacity: 1; }
-        .project-card:hover img { transform: scale(1.1); }
-
-        /* --- Pricing Section --- */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .price-card { padding: 50px 40px; text-align: center; position: relative; }
-        .price-card.popular { 
-            border: 2px solid var(--accent-color); 
-            transform: scale(1.05); 
-            background: rgba(0, 255, 204, 0.02);
-        }
-        .popular-tag {
-            position: absolute; top: 20px; right: 20px;
-            background: var(--accent-color); color: #000;
-            padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; font-weight: 800;
-        }
-        .price-card h3 { font-size: 1.8rem; margin-bottom: 15px; }
-        .price-card .amount { font-size: 3rem; font-weight: 800; margin-bottom: 30px; color: var(--accent-color); }
-        .price-card ul { list-style: none; text-align: right; margin-bottom: 40px; color: var(--text-dim); }
-        .price-card ul li { margin-bottom: 15px; display: flex; align-items: center; }
-        .price-card ul li::before { content: '✓'; color: var(--accent-color); margin-left: 10px; font-weight: bold; }
-
-        /* --- Contact Section --- */
-        .contact-container {
-            background: var(--card-bg);
-            border-radius: 50px; padding: 80px 40px;
-            text-align: center; border: 1px solid var(--glass-border);
-        }
-        .contact-link {
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            color: var(--accent-color); text-decoration: none;
-            font-weight: 800; display: block; margin: 30px 0;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 30px; backdrop-filter: blur(10px);
             transition: 0.3s;
         }
-        .contact-link:hover { text-shadow: 0 0 30px var(--accent-glow); }
+        .glass-card:hover { border-color: var(--accent-color); transform: translateY(-5px); }
 
-        footer { padding: 50px; text-align: center; color: var(--text-dim); font-size: 0.9rem; }
+        .btn {
+            padding: 12px 30px; border-radius: 12px; border: none; cursor: pointer;
+            font-weight: bold; font-size: 1rem; transition: 0.4s; text-decoration: none; display: inline-block;
+        }
+        .btn-primary { background: var(--accent-color); color: #000; box-shadow: 0 0 15px var(--accent-glow); }
+        .btn-primary:hover { box-shadow: 0 0 25px var(--accent-color); transform: scale(1.05); }
+        .btn-outline { background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); }
+        .btn-outline:hover { background: var(--accent-color); color: #000; }
+
+        /* --- Hero Section --- */
+        .hero { text-align: center; padding: 80px 0; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .hero p { color: var(--text-dim); font-size: 1.3rem; margin-bottom: 40px; }
+        .logo-img { width: 150px; border-radius: 30px; margin-bottom: 20px; box-shadow: 0 0 30px var(--accent-glow); }
+
+        /* --- Grid Layouts --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+
+        /* --- Form Styles --- */
+        .form-group { margin-bottom: 20px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--text-dim); }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05); color: #fff; font-size: 1rem; outline: none;
+        }
+        .form-group input:focus { border-color: var(--accent-color); }
+
+        /* --- Chat UI Simulation --- */
+        .chat-container { max-width: 500px; margin: 0 auto; height: 450px; display: flex; flex-direction: column; }
+        .chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 10px 15px; border-radius: 15px; max-width: 80%; font-size: 0.9rem; line-height: 1.5; }
+        .msg.bot { background: var(--glass-border); align-self: flex-start; border-bottom-right-radius: 2px; }
+        .msg.user { background: var(--accent-color); color: #000; align-self: flex-end; border-bottom-left-radius: 2px; }
+
+        /* --- Video/Education --- */
+        .video-card { position: relative; border-radius: 15px; overflow: hidden; aspect-ratio: 16/9; cursor: pointer; }
+        .video-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.3s; }
+        .video-card:hover img { opacity: 0.8; transform: scale(1.05); }
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: var(--accent-color); }
+
+        /* --- Contact Info --- */
+        .contact-list { list-style: none; margin-top: 20px; }
+        .contact-list li { margin-bottom: 15px; font-size: 1.1rem; }
+        .contact-list span { color: var(--accent-color); font-weight: bold; }
 
         @media (max-width: 768px) {
-            .section-padding { padding: 70px 0; }
-            .price-card.popular { transform: scale(1); }
-            .video-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            nav { gap: 10px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animation">
-        <div class="blob"></div>
+<div class="bg-effect"></div>
+
+<nav>
+    <a onclick="navigateTo('home')">خانه</a>
+    <a onclick="navigateTo('portfolio')">پورتفولیو</a>
+    <a onclick="navigateTo('education')">آموزش‌ها</a>
+    <a onclick="navigateTo('services')">خدمات</a>
+    <a onclick="navigateTo('project-form')">ثبت پروژه</a>
+    <a onclick="navigateTo('contact')">تماس</a>
+</nav>
+
+<div class="container">
+
+    <!-- صفحه اصلی (Home) -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <img src="https://uploadkon.ir/uploads/b5be01_26photo26892923900.jpg" alt="Logo" class="logo-img">
+            <h1>Samadi <span style="color: var(--accent-color);">Creative</span></h1>
+            <p>تبدیل ایده‌ها به واقعیت‌های بصری خیره‌کننده</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="navigateTo('project-form')">شروع یک پروژه جدید</button>
+                <button class="btn btn-outline" onclick="navigateTo('consultation')">درخواست مشاوره رایگان</button>
+            </div>
+        </section>
     </div>
 
-    <!-- 1. HERO -->
-    <section class="hero container">
-        <img src="https://uploadkon.ir/uploads/b5be01_26photo26892923900.jpg" alt="Samadi Creative Logo" class="main-logo">
-        <h1>Samadi <span style="color: var(--accent-color);">Creative</span></h1>
-        <p>خلق دنیایی از زیبایی، حرکت و هویت بصری برای برندهای پیشرو</p>
-        <div class="hero-btns">
-            <a href="#portfolio" class="btn btn-primary">شروع همکاری</a>
+    <!-- صفحه پورتفولیو (Portfolio) -->
+    <div id="portfolio" class="page">
+        <div style="text-align: center;">
+            <h2>نمونه کارهای برگزیده</h2>
+            <p style="color: var(--text-dim);">آثار اجرا شده در پروژه‌های مختلف</p>
         </div>
-    </section>
+        <div class="grid">
+            <div class="glass-card" style="height: 250px; background: url('https://via.placeholder.com/400x300/1c2d55/fff?text=Branding') center/cover;"></div>
+            <div class="glass-card" style="height: 250px; background: url('https://via.placeholder.com/400x300/1c2d55/fff?text=Motion') center/cover;"></div>
+            <div class="glass-card" style="height: 250px; background: url('https://via.placeholder.com/400x300/1c2d55/fff?text=Web+Design') center/cover;"></div>
+        </div>
+    </div>
 
-    <!-- 2. VIDEO SHOWCASE -->
-    <section class="section-padding container" id="videos">
-        <div class="section-title">
-            <h2>Motion & Video</h2>
+    <!-- صفحه آموزش (Education) -->
+    <div id="education" class="page">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2>آکادمی آموزش طراحی</h2>
+            <p style="color: var(--text-dim);">آموزش‌های تخصصی برای ارتقای سطح مهارت شما</p>
         </div>
-        <div class="video-grid">
-            <div class="video-card glass-card">
-                <video src="motion1.mp4" autoplay loop muted playsinline></video>
-                <div class="video-info">
-                    <h3>Brand Motion</h3>
-                    <p>انیمیشن لوگو و هویت متحرک</p>
+        <div class="grid">
+            <div class="glass-card">
+                <div class="video-card">
+                    <img src="https://via.placeholder.com/400x225/0a1128/00ffcc?text=Video+1">
+                    <div class="play-icon">▶</div>
                 </div>
+                <h3 style="margin-top: 15px;">مبانی گرافیک دیجیتال</h3>
             </div>
-            <div class="video-card glass-card">
-                <video src="motion2.mp4" autoplay loop muted playsinline></video>
-                <div class="video-info">
-                    <h3>Visual FX</h3>
-                    <p>جلوه‌های ویژه و تدوین تبلیغاتی</p>
+            <div class="glass-card">
+                <div class="video-card">
+                    <img src="https://via.placeholder.com/400x225/0a1128/00ffcc?text=Video+2">
+                    <div class="play-icon">▶</div>
                 </div>
+                <h3 style="margin-top: 15px;">موشن گرافیک حرفه‌ای</h3>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- 3. PORTFOLIO -->
-    <section class="section-padding container" id="portfolio">
-        <div class="section-title">
-            <h2>Graphic Portfolio</h2>
+    <!-- صفحه خدمات (Services) -->
+    <div id="services" class="page">
+        <div style="text-align: center;">
+            <h2>خدمات ما</h2>
         </div>
-        <div class="portfolio-grid">
-            <div class="project-card glass-card"><img src="p1.jpg" alt=""><div class="project-overlay"><h3>Logo Design</h3></div></div>
-            <div class="project-card glass-card"><img src="p2.jpg" alt=""><div class="project-overlay"><h3>Brand Identity</h3></div></div>
-            <div class="project-card glass-card"><img src="p3.jpg" alt=""><div class="project-overlay"><h3>Web Interface</h3></div></div>
-        </div>
-    </section>
-
-    <!-- 4. PRICING -->
-    <section class="section-padding container" id="pricing">
-        <div class="section-title">
-            <h2>Services & Plans</h2>
-        </div>
-        <div class="pricing-grid">
-            <div class="price-card glass-card">
-                <h3>Essential</h3>
-                <div class="amount">توافقی</div>
-                <ul>
-                    <li>طراحی لوگو و تایپوگرافی</li>
-                    <li>پالت رنگی اختصاصی</li>
-                    <li>فایل‌های آماده چاپ</li>
-                </ul>
-                <a href="#contact" class="btn" style="border: 1px solid var(--accent-color); color: var(--accent-color);">درخواست مشاوره</a>
+        <div class="grid">
+            <div class="glass-card" style="text-align: center;">
+                <h3>هویت بصری</h3>
+                <p style="color: var(--text-dim); margin: 15px 0;">طراحی لوگو و استایل برند</p>
+                <button class="btn btn-outline" onclick="navigateTo('project-form')">درخواست</button>
             </div>
-
-            <div class="price-card glass-card popular">
-                <div class="popular-tag">BEST VALUE</div>
-                <h3>Premium Brand</h3>
-                <div class="amount">توافقی</div>
-                <ul>
-                    <li>هویت بصری کامل برند</li>
-                    <li>طراحی موشن لوگو (2D)</li>
-                    <li>طراحی کارت ویزیت و استیشنری</li>
-                    <li>پشتیبانی ویژه ۶ ماهه</li>
-                </ul>
-                <a href="#contact" class="btn btn-primary">ثبت پروژه</a>
+            <div class="glass-card" style="text-align: center; border-color: var(--accent-color);">
+                <h3>موشن گرافیک</h3>
+                <p style="color: var(--text-dim); margin: 15px 0;">ویدئوهای تبلیغاتی و موشن لوگو</p>
+                <button class="btn btn-primary" onclick="navigateTo('project-form')">درخواست</button>
             </div>
-
-            <div class="price-card glass-card">
-                <h3>Digital Web</h3>
-                <div class="amount">توافقی</div>
-                <ul>
-                    <li>طراحی UI/UX مدرن</li>
-                    <li>سایت تک صفحه‌ای واکنش‌گرا</li>
-                    <li>بهینه‌سازی سرعت و SEO</li>
-                </ul>
-                <a href="#contact" class="btn" style="border: 1px solid var(--accent-color); color: var(--accent-color);">درخواست مشاوره</a>
+            <div class="glass-card" style="text-align: center;">
+                <h3>طراحی وب</h3>
+                <p style="color: var(--text-dim); margin: 15px 0;">طراحی سایت‌های تعاملی</p>
+                <button class="btn btn-outline" onclick="navigateTo('project-form')">درخواست</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- 5. CONTACT -->
-    <section class="section-padding container" id="contact">
-        <div class="contact-container">
-            <h2>آماده‌ای که بدرخشی؟</h2>
-            <p>همین حالا برای شروع پروژه رویایی خود با من تماس بگیرید.</p>
-            <a href="mailto:yourmail@example.com" class="contact-link">Email Me Direct</a>
-            <div style="margin-top: 20px;">
-                <a href="#" style="color: var(--text-dim); margin: 0 15px; text-decoration: none;">Instagram</a>
-                <a href="#" style="color: var(--text-dim); margin: 0 15px; text-decoration: none;">Telegram</a>
-                <a href="#" style="color: var(--text-dim); margin: 0 15px; text-decoration: none;">WhatsApp</a>
+    <!-- صفحه ثبت پروژه (Project Form) -->
+    <div id="project-form" class="page">
+        <div class="glass-card" style="max-width: 600px; margin: 0 auto;">
+            <h2 style="text-align: center; margin-bottom: 30px;">ثبت پروژه جدید</h2>
+            <form onsubmit="handleForm(event)">
+                <div class="form-group">
+                    <label>نام و نام خانوادگی</label>
+                    <input type="text" placeholder="نام شما" required>
+                </div>
+                <div class="form-group">
+                    <label>شماره تماس</label>
+                    <input type="tel" placeholder="09xxxxxxxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>توضیحات پروژه</label>
+                    <textarea rows="5" placeholder="لطفاً جزئیات پروژه خود را بنویسید..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">ارسال درخواست</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- صفحه مشاوره (Consultation/Chat) -->
+    <div id="consultation" class="page">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2>مشاوره مستقیم</h2>
+            <p style="color: var(--text-dim);">یک چت سریع با تیم فنی ما</p>
+        </div>
+        <div class="chat-container glass-card">
+            <div class="chat-box" id="chatBox">
+                <div class="msg bot">سلام! خوش آمدید به Samadi Creative. چطور می‌توانم در پروژه شما کمک کنم؟</div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <input type="text" id="chatInput" style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: #fff;" placeholder="پیام خود را بنویسید...">
+                <button class="btn btn-primary" onclick="sendChat()">ارسال</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <footer>
-        <p>&copy; 2026 Samadi Creative. All Rights Reserved.</p>
-    </footer>
+    <!-- صفحه تماس (Contact) -->
+    <div id="contact" class="page">
+        <div class="glass-card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <h2>راه‌های ارتباطی</h2>
+            <p style="color: var(--text-dim); margin-bottom: 30px;">ما برای همکاری با شما مشتاقیم</p>
+            <ul class="contact-list">
+                <li>📞 شماره تماس: <span>09036400832</span></li>
+                <li>🆔 آیدی پشتیبانی: <span>samadi1388ali</span> <br><small>(روبیکا، ایتا، بله)</small></li>
+                <li>📢 کانال‌ها: <span>samadi_creative</span> <br><small>(ایتا، بله، روبیکا)</small></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // سیستم جابجایی بین صفحات (SPA)
+    function navigateTo(pageId) {
+        // پنهان کردن همه صفحات
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        // نمایش صفحه انتخاب شده
+        document.getElementById(pageId).classList.add('active');
+        // اسکرول به بالای صفحه
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // مدیریت فرم ثبت پروژه
+    function handleForm(event) {
+        event.preventDefault();
+        alert('درخواست شما با موفقیت ثبت شد. به زودی با شما تماس خواهیم گرفت!');
+        navigateTo('home');
+    }
+
+    // سیستم چت ساده
+    function sendChat() {
+        const input = document.getElementById('chatInput');
+        const chatBox = document.getElementById('chatBox');
+        
+        if (input.value.trim() !== "") {
+            // پیام کاربر
+            const userMsg = document.createElement('div');
+            userMsg.className = 'msg user';
+            userMsg.textContent = input.value;
+            chatBox.appendChild(userMsg);
+
+            // پاسخ خودکار ربات (شبیه‌سازی)
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'msg bot';
+                botMsg.textContent = 'پیام شما دریافت شد. کارشناس ما در اسرع وقت پاسخگو خواهد بود.';
+                chatBox.appendChild(botMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+</script>
 
 </body>
 </html>
